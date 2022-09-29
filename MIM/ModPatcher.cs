@@ -8,16 +8,14 @@
     using Boardgame.BoardPiece;
     using Boardgame.Data;
     using Boardgame.Ui;
-    using Data.GameData;
     using DataKeys;
     using Fidelity.Singleton;
     using Fidelity.Localization;
     using HarmonyLib;
     using Prototyping;
-    using RGCommon;
     using TMPro;
     using System.Linq;
-    using System.Runtime.CompilerServices;
+
 
     internal static class ModPatcher
     {
@@ -60,7 +58,7 @@
                 TileRect viewerTile = new TileRect(hoverTile);
                 visibilityCalculator.SetupAndCalculate(___boardModel.tileSet, viewerTile, new List<TileRect>(), 100, false);
                 MoveSet visibleTiles = new MoveSet(viewerTile);
-                visibilityCalculator.ForEachVisible(delegate (IntPoint2D visibleTile, int distance)
+                visibilityCalculator.ForEachVisible(delegate(IntPoint2D visibleTile, int distance)
                 {
                     visibleTiles.AddMove(visibleTile, distance);
                 });
@@ -73,6 +71,12 @@
             {
                 VisibilityCalculator visibilityCalculator2 = new VisibilityCalculator();
                 TileRect viewerTile2 = new TileRect(hoverTile);
+                MIM.Logger.Msg($"MIM: ViewerTile {viewerTile2}");
+                if (viewerTile2.Equals(new TileRect(-1, -1)))
+                {
+                    viewerTile2 = new TileRect(15, 15, 1);
+                }
+
                 visibilityCalculator2.SetupAndCalculate(___boardModel.tileSet, viewerTile2, new List<TileRect>(), 100, false);
                 MoveSet visibleTiles = new MoveSet(viewerTile2);
                 visibilityCalculator2.ForEachVisible(delegate (IntPoint2D visibleTile, int distance)
